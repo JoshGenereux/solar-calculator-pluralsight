@@ -47,37 +47,37 @@ function calculatePanel() {
     let power = panelOptions[userChoice].value;
     let name = panelOptions[userChoice].text;
     let x = [power, name]
-    console.log(x)
     return x;
 }
 
 
 function calculateSolar (){
     let dailyUseKw = addMonths('mpc')
-    console.log(dailyUseKw)
 
     let sunHoursPerDay = sunHours();
-    console.log(sunHoursPerDay);
 
     let minKwNeeds = dailyUseKw/sunHoursPerDay;
-    console.log(minKwNeeds)
 
     let realKwNeeds = minKwNeeds * 1.25;
-    console.log(realKwNeeds)
 
     let realWattNeeds = realKwNeeds * 1000;
-    console.log(realWattNeeds)
 
     let panelInfo = calculatePanel();
     let panelOutPut = panelInfo[0];
     let panelName = panelInfo[1];
-    console.log(panelOutPut)
-    console.log(panelName)
 
     let panelsNeeded = Math.ceil(realWattNeeds / panelOutPut);
-    console.log(panelsNeeded)
 
+    let feedback = ``;
+    feedback += `<p>Based on your average daily use of ${Math.round(dailyUseKw)} KWh, you will need
+                to purchase ${panelsNeeded}, ${panelName} solar panels to offset 100% of your electricity bill.`;
+    feedback += `<h2>Additional Details</h2>`;
+    feedback += `<p>Your average daily electricity consumption: ${Math.round(dailyUseKw)} KWh per day.`;
+    feedback += `<p>Average sunshine hours per day: ${sunHoursPerDay}`;
+    feedback += `<p>Realistic watts needed per hour: ${Math.round(realWattNeeds)} watts/hour`;
+    feedback += `<p>The ${panelName} panel your selected generates about ${panelOutPut} watts per hour.`;
 
+    document.getElementById('feedback').innerHTML = feedback;
 }
 
 
